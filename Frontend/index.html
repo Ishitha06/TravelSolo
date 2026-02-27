@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Solo Travel Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4c5f6f6e3a.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+   <!-- WEBSITE LOGO -->
+<div class="site-logo">
+  <img src="logo1.png" alt="Travel Solo Logo">
+</div>
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+
+<section class="hero" id="hero">
+  <div class="overlay"></div>
+
+  <!-- One single very subtle plane near the bottom — doesn't fight the background -->
+  <svg class="hero-trail" xmlns="http://www.w3.org/2000/svg">
+    <path d="M -80,540 Q 480,460 1020,525 T 2060,485"
+      fill="none" stroke="rgba(245,158,11,0.13)" stroke-width="1.5" stroke-dasharray="14 10"/>
+    <text font-size="22" fill="rgba(245,158,11,0.40)">✈
+      <animateMotion dur="26s" repeatCount="indefinite"
+        path="M -80,540 Q 480,460 1020,525 T 2060,485"/>
+    </text>
+  </svg>
+  
+
+
+  <div class="hero-content">
+    <span class="badge">✈&nbsp; Your Solo Journey Starts Here</span>
+    <h1>Discover the World,<br><span class="highlight">Discover Yourself.</span></h1>
+    <p>Tell us where you want to go and we'll craft your personalized solo itinerary.</p>
+    <div class="search-box">
+      <input type="text" id="cityInput" placeholder="🌍  Where to? (e.g. Mysore, Kyoto)">
+      <button id="startBtn">Plan My Trip →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     QUESTIONS
+════════════════════════════════════════ -->
+<section class="questions hidden" id="questions">
+
+  <!-- ── DOODLE LAYER (behind everything) ── -->
+  <div class="doodle-bg">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;overflow:visible;">
+
+      <!-- TOP arc + plane -->
+      <path d="M -70,68 Q 270,14 640,72 T 1260,42 T 1780,80"
+        fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="18 9" opacity="0.52"/>
+      <text font-size="28" fill="#f59e0b" opacity="0.82">✈
+        <animateMotion dur="16s" repeatCount="indefinite"
+          path="M -70,68 Q 270,14 640,72 T 1260,42 T 1780,80"/>
+      </text>
+      <circle r="5.5" fill="#f59e0b" opacity="0.55">
+        <animateMotion dur="16s" repeatCount="indefinite"
+          path="M -70,68 Q 270,14 640,72 T 1260,42 T 1780,80"/>
+      </circle>
+
+      <!-- MID arc right-to-left + plane -->
+      <path d="M 1820,365 Q 1340,295 870,368 T 210,338 T -90,375"
+        fill="none" stroke="#fb923c" stroke-width="2.2" stroke-dasharray="14 10" opacity="0.44"/>
+      <g transform="translate(1820,0) scale(-1,1)">
+        <text font-size="24" fill="#fb923c" opacity="0.78">✈
+          <animateMotion dur="21s" repeatCount="indefinite"
+            path="M 0,365 Q 480,295 950,368 T 1610,338 T 1910,375"/>
+        </text>
+        <circle r="4.5" fill="#fb923c" opacity="0.5">
+          <animateMotion dur="21s" repeatCount="indefinite"
+            path="M 0,365 Q 480,295 950,368 T 1610,338 T 1910,375"/>
+        </circle>
+      </g>
+
+      <!-- BOTTOM arc + plane -->
+      <path d="M -70,740 Q 360,668 780,738 T 1390,705 T 1820,742"
+        fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="15 10" opacity="0.36"/>
+      <text font-size="20" fill="#f59e0b" opacity="0.65">✈
+        <animateMotion dur="26s" repeatCount="indefinite" begin="5s"
+          path="M -70,740 Q 360,668 780,738 T 1390,705 T 1820,742"/>
+      </text>
+
+      <!-- LEFT squiggle border -->
+      <path d="M 44,0 Q 22,200 50,430 T 30,700 T 56,980"
+        fill="none" stroke="#6366f1" stroke-width="2" stroke-dasharray="10 13" opacity="0.28"/>
+
+      <!-- RIGHT squiggle border -->
+      <path d="M 1846,0 Q 1868,220 1840,450 T 1864,720 T 1838,1000"
+        fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="10 13" opacity="0.24"/>
+
+      <!-- Cloud doodles – very subtle -->
+      <g fill="none" stroke="#b8c5d6" stroke-width="1.6" opacity="0.22">
+        <!-- top-right -->
+        <path d="M 1402,115 Q 1424,90 1454,108 Q 1466,84 1500,102 Q 1522,84 1548,106 Q 1562,128 1536,142 L 1402,142 Z"/>
+        <!-- mid-left -->
+        <path d="M 58,415 Q 82,390 112,408 Q 124,384 158,402 Q 180,384 206,408 Q 218,430 194,444 L 58,444 Z"/>
+        <!-- lower-right -->
+        <path d="M 1362,792 Q 1386,766 1416,784 Q 1428,760 1462,778 Q 1484,760 1510,782 Q 1522,804 1498,818 L 1362,818 Z"/>
+        <!-- top-centre small cloud -->
+        <path d="M 694,44 Q 712,24 736,38 Q 744,20 770,34 Q 786,18 806,38 Q 814,56 794,66 L 694,66 Z"/>
+      </g>
+
+    </svg>
+  </div>
+
+  <!-- ── PROGRESS ── -->
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Step 1: Days -->
+  <div class="step active">
+    <h2>🗓️ How many days are you planning?</h2>
+    <div class="options">
+      <div class="card" data-value="1-2">
+        <div class="card-emoji"><i class="fas fa-bolt"></i></div>
+        <h3>1-2 days</h3><p>Quick escape</p>
+      </div>
+      <div class="card" data-value="3-5">
+        <div class="card-emoji"><i class="fas fa-sun"></i></div>
+        <h3>3-5 days</h3><p>Sweet spot</p>
+      </div>
+      <div class="card" data-value="6-10">
+        <div class="card-emoji"><i class="fas fa-globe"></i></div>
+        <h3>6-10 days</h3><p>Deep dive</p>
+      </div>
+      <div class="card" data-value="10">
+        <div class="card-emoji"><i class="fas fa-suitcase-rolling"></i></div>
+        <h3>10+ days</h3><p>Long adventure</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Pace -->
+  <div class="step">
+    <h2>🚶 How do you like to pace your days?</h2>
+    <div class="options">
+      <div class="card" data-value="Packed">
+        <div class="card-emoji"><i class="fas fa-fire"></i></div>
+        <h3>Packed</h3><p>See as much as possible</p>
+      </div>
+      <div class="card" data-value="Balanced">
+        <div class="card-emoji"><i class="fas fa-balance-scale"></i></div>
+        <h3>Balanced</h3><p>1–2 activities, relaxed pace</p>
+      </div>
+      <div class="card" data-value="Spontaneous">
+        <div class="card-emoji"><i class="fas fa-dice"></i></div>
+        <h3>Spontaneous</h3><p>No plans, just vibes</p>
+      </div>
+      <div class="card" data-value="Calm">
+        <div class="card-emoji"><i class="fas fa-leaf"></i></div>
+        <h3>Calm</h3><p>One key activity, rest in between</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Budget -->
+  <div class="step">
+    <h2>💰 What's your estimated daily budget?</h2>
+    <div class="options">
+      <div class="card" data-value="Shoestring">
+        <div class="card-emoji"><i class="fas fa-coins"></i></div>
+        <h3>Shoestring</h3><p>$50–80/day</p>
+      </div>
+      <div class="card" data-value="Comfortable">
+        <div class="card-emoji"><i class="fas fa-wallet"></i></div>
+        <h3>Comfortable</h3><p>$100–200/day</p>
+      </div>
+      <div class="card" data-value="Luxury">
+        <div class="card-emoji"><i class="fas fa-gem"></i></div>
+        <h3>Luxury</h3><p>$300+/day</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Vibe -->
+  <div class="step">
+    <h2>✨ What's your ideal solo vibe?</h2>
+    <div class="options">
+      <div class="card" data-value="Relaxed">
+        <div class="card-emoji"><i class="fas fa-mug-hot"></i></div>
+        <h3>Relaxed</h3><p>Slow mornings, calm evenings</p>
+      </div>
+      <div class="card" data-value="Adventurous">
+        <div class="card-emoji"><i class="fas fa-mountain"></i></div>
+        <h3>Adventurous</h3><p>Thrills and trails</p>
+      </div>
+      <div class="card" data-value="Cultural">
+        <div class="card-emoji"><i class="fas fa-landmark"></i></div>
+        <h3>Cultural</h3><p>Museums & local life</p>
+      </div>
+      <div class="card" data-value="Nightlife">
+        <div class="card-emoji"><i class="fas fa-music"></i></div>
+        <h3>Social & Nightlife</h3><p>Bars, music & people</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5: Motivation -->
+  <div class="step">
+    <h2>💡 What motivates you most?</h2>
+    <div class="options">
+      <div class="card" data-value="Foodie">
+        <div class="card-emoji"><i class="fas fa-utensils"></i></div>
+        <h3>Food</h3><p>Eat your way through</p>
+      </div>
+      <div class="card" data-value="Nature">
+        <div class="card-emoji"><i class="fas fa-tree"></i></div>
+        <h3>Nature</h3><p>Green trails & open skies</p>
+      </div>
+      <div class="card" data-value="History">
+        <div class="card-emoji"><i class="fas fa-book-open"></i></div>
+        <h3>History</h3><p>Stories of the past</p>
+      </div>
+      <div class="card" data-value="Photography">
+        <div class="card-emoji"><i class="fas fa-camera"></i></div>
+        <h3>Photography</h3><p>Chase the perfect shot</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 6: Food -->
+  <div class="step">
+    <h2>🥗 What are your food preferences?</h2>
+    <div class="options">
+      <div class="card" data-value="Veg">
+        <div class="card-emoji"><i class="fas fa-seedling"></i></div>
+        <h3>Pure Vegetarian</h3><p>No meat, no fish</p>
+      </div>
+      <div class="card" data-value="NonVeg">
+        <div class="card-emoji"><i class="fas fa-drumstick-bite"></i></div>
+        <h3>Non-Vegetarian</h3><p>Meat & seafood lover</p>
+      </div>
+      <div class="card" data-value="vegan">
+        <div class="card-emoji"><i class="fas fa-leaf"></i></div>
+        <h3>Vegan</h3><p>Fully plant based</p>
+      </div>
+      <div class="card" data-value="flexible">
+        <div class="card-emoji"><i class="fas fa-concierge-bell"></i></div>
+        <h3>Flexible</h3><p>Try everything!</p>
+      </div>
+    </div>
+  </div>
+
+  <button id="nextBtn" class="next-btn">Next →</button>
+
+</section>
+
+<!-- ═══════════════════════════════════════
+     ITINERARY
+════════════════════════════════════════ -->
+<section class="itinerary hidden" id="itinerary">
+
+  <div class="itinerary-header">
+    <h2 id="cityTitle">Your Trip Plan</h2>
+    <p id="personalityTag"></p>
+  </div>
+
+  <div class="itinerary-top-row">
+    <div class="itinerary-grid">
+      <div class="hotel-card">
+        <h3>🏨 Recommended Stay</h3>
+        <p>Boutique Central Hotel</p>
+      </div>
+      <div class="budget-card">
+        <h3>💸 Estimated Budget</h3>
+        <p>🏠 Accommodation: $180</p>
+        <p>🍽️ Food: $140</p>
+        <p>🎭 Activities: $100</p>
+        <h4>Total: $420</h4>
+      </div>
+    </div>
+
+  <!-- ══ CURRENCY CONVERTER (compact square card) ══ -->
+  <div class="currency-converter">
+    <div class="conv-mini-header">💱 Currency Converter</div>
+    <div class="conv-mini-body">
+      <div class="conv-mini-row">
+        <input type="number" id="convAmount" value="100" min="0" step="any" placeholder="Amount"/>
+        <select id="convFrom">
+          <option value="USD">🇺🇸 USD</option>
+          <option value="EUR">🇪🇺 EUR</option>
+          <option value="GBP">🇬🇧 GBP</option>
+          <option value="INR">🇮🇳 INR</option>
+          <option value="JPY">🇯🇵 JPY</option>
+          <option value="AUD">🇦🇺 AUD</option>
+          <option value="CAD">🇨🇦 CAD</option>
+          <option value="SGD">🇸🇬 SGD</option>
+          <option value="THB">🇹🇭 THB</option>
+          <option value="AED">🇦🇪 AED</option>
+          <option value="MYR">🇲🇾 MYR</option>
+          <option value="IDR">🇮🇩 IDR</option>
+          <option value="KRW">🇰🇷 KRW</option>
+          <option value="CNY">🇨🇳 CNY</option>
+          <option value="VND">🇻🇳 VND</option>
+          <option value="NZD">🇳🇿 NZD</option>
+          <option value="CHF">🇨🇭 CHF</option>
+          <option value="MXN">🇲🇽 MXN</option>
+          <option value="BRL">🇧🇷 BRL</option>
+        </select>
+        <button class="swap-btn" id="swapBtn" title="Swap">⇄</button>
+        <select id="convTo">
+          <option value="USD">🇺🇸 USD</option>
+          <option value="EUR">🇪🇺 EUR</option>
+          <option value="GBP">🇬🇧 GBP</option>
+          <option value="INR" selected>🇮🇳 INR</option>
+          <option value="JPY">🇯🇵 JPY</option>
+          <option value="AUD">🇦🇺 AUD</option>
+          <option value="CAD">🇨🇦 CAD</option>
+          <option value="SGD">🇸🇬 SGD</option>
+          <option value="THB">🇹🇭 THB</option>
+          <option value="AED">🇦🇪 AED</option>
+          <option value="MYR">🇲🇾 MYR</option>
+          <option value="IDR">🇮🇩 IDR</option>
+          <option value="KRW">🇰🇷 KRW</option>
+          <option value="CNY">🇨🇳 CNY</option>
+          <option value="VND">🇻🇳 VND</option>
+          <option value="NZD">🇳🇿 NZD</option>
+          <option value="CHF">🇨🇭 CHF</option>
+          <option value="MXN">🇲🇽 MXN</option>
+          <option value="BRL">🇧🇷 BRL</option>
+        </select>
+        <button class="convert-btn" id="convertBtn">Convert 💸</button>
+      </div>
+      <div class="conv-loading hidden" id="convLoading">⏳ Fetching…</div>
+      <div class="conv-error hidden" id="convError">⚠️ Using approximate rates.</div>
+      <div class="conv-result hidden" id="convResult">
+        <div class="conv-result-amount" id="resultAmount"></div>
+        <div class="conv-result-rate" id="resultRate"></div>
+      </div>
+    </div>
+  </div><!-- /currency-converter -->
+  </div><!-- /itinerary-top-row -->
+
+  <div class="timeline" id="timeline"></div>
+
+</section>
+
+<!-- ── Scripts ── -->
+<script>
+// Hero parallax (mouse move only, no bubbles)
+(function () {
+  const hero    = document.getElementById('hero');
+  const content = hero.querySelector('.hero-content');
+  hero.addEventListener('mousemove', (e) => {
+    const dx = (e.clientX - window.innerWidth  / 2) / window.innerWidth;
+    const dy = (e.clientY - window.innerHeight / 2) / window.innerHeight;
+    content.style.transform  = `translate(${dx * 14}px, ${dy * 9}px)`;
+    content.style.transition = 'transform 0.08s ease-out';
+  });
+  hero.addEventListener('mouseleave', () => {
+    content.style.transform  = 'translate(0,0)';
+    content.style.transition = 'transform 0.7s ease';
+  });
+})();
+
+// ── Currency Converter ─────────────────────────────────────────
+(function () {
+  // Static fallback rates (relative to USD)
+  const STATIC = {
+    USD:1, EUR:0.92, GBP:0.79, INR:83.5,  JPY:149.5, AUD:1.53,
+    CAD:1.36, SGD:1.34, THB:35.1, AED:3.67, MYR:4.72,  IDR:15700,
+    KRW:1330, CNY:7.24, VND:24500, NZD:1.63, CHF:0.89,  MXN:17.1, BRL:4.97
+  };
+
+  async function getRates(base) {
+    try {
+      const r = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
+      if (!r.ok) throw 0;
+      return (await r.json()).rates;
+    } catch {
+      const out = {};
+      for (const [k, v] of Object.entries(STATIC)) out[k] = v / STATIC[base];
+      return out;
+    }
+  }
+
+  async function doConvert() {
+    const amount  = parseFloat(document.getElementById('convAmount').value);
+    const from    = document.getElementById('convFrom').value;
+    const to      = document.getElementById('convTo').value;
+    const loading = document.getElementById('convLoading');
+    const errBox  = document.getElementById('convError');
+    const result  = document.getElementById('convResult');
+
+    if (isNaN(amount) || amount < 0) { alert('Please enter a valid amount.'); return; }
+
+    result.classList.add('hidden');
+    errBox.classList.add('hidden');
+    loading.classList.remove('hidden');
+
+    const rates = await getRates(from);
+    loading.classList.add('hidden');
+
+    if (!rates[to]) { errBox.classList.remove('hidden'); return; }
+
+    const converted = (amount * rates[to]);
+    const rate      = rates[to];
+
+    // Format nicely
+    const fmtOpts = { maximumFractionDigits: ['JPY','KRW','IDR','VND'].includes(to) ? 0 : 2 };
+    document.getElementById('resultAmount').textContent =
+      `${amount.toLocaleString()} ${from}  =  ${converted.toLocaleString(undefined, fmtOpts)} ${to}`;
+    document.getElementById('resultRate').textContent =
+      `1 ${from} ≈ ${rate.toLocaleString(undefined, { maximumFractionDigits: 4 })} ${to}`;
+
+    result.classList.remove('hidden');
+    // pop animation
+    result.style.animation = 'none';
+    void result.offsetWidth;
+    result.style.animation = 'resultPop 0.45s cubic-bezier(0.34,1.56,0.64,1)';
+  }
+
+  document.getElementById('convertBtn').addEventListener('click', doConvert);
+
+  document.getElementById('swapBtn').addEventListener('click', () => {
+    const f = document.getElementById('convFrom');
+    const t = document.getElementById('convTo');
+    [f.value, t.value] = [t.value, f.value];
+    doConvert();
+  });
+
+  // Also auto-convert when inputs change
+  ['convAmount','convFrom','convTo'].forEach(id =>
+    document.getElementById(id).addEventListener('change', doConvert)
+  );
+})();
+</script>
+
+<!-- FULLSCREEN LOADER -->
+<div id="fullLoader" class="full-loader hidden">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <p>Crafting your perfect itinerary...</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
