@@ -79,7 +79,7 @@ loader.classList.remove("hidden");
 // Hide itinerary content while loading
 document.getElementById("itinerary").style.visibility = "hidden";
 
-      const response = await fetch("http://localhost:5000/generate-itinerary", {
+      const response = await fetch("https://travelsolo-backend.onrender.com/generate-itinerary", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
